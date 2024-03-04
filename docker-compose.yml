@@ -26,3 +26,21 @@ services:
       MYSQL_DATABASE: upsdb
     ports:
       - "3306:3306"
+  pwr_stat:
+    container_name: pwr_stat
+    hostname: pwr_stat
+    restart: always
+    image: dwinks/pwrstat_docker:latest
+    devices:
+      - /dev/bus/usb/002/002:/dev/bus/usb/001/001
+    volumes:
+      - ./pwrstat.yaml:/pwrstat.yaml:ro
+      # Optionally override the powerstatd configuration file
+      # - /docker_binds/pwr_stat/pwrstatd.conf:/etc/pwrstatd.conf:ro
+    healthcheck:
+      test: ["CMD", "curl", "-sI", "http://127.0.0.1:5002/pwrstat"]
+      interval: 30s
+      timeout: 1s
+      retries: 24
+    privileged: true
+    network_mode: host

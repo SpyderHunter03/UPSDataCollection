@@ -27,7 +27,8 @@ var timer = new System.Timers.Timer(10000);
 
 timer.Elapsed += async (sender, e) =>
 {
-    var response = await client.GetFromJsonAsync<JsonObject>("http://localhost:5003/pwrstat");
+    // var response = await client.GetFromJsonAsync<JsonObject>("http://localhost:5003/pwrstat");
+    var response = await client.GetFromJsonAsync<JsonObject>("http://pwr_stat:5003/pwrstat");
     if (response != null)
     {
         var data = UPSDataParser.CreateFromJsonObject(response);

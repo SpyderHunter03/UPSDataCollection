@@ -15,6 +15,7 @@ services:
       dockerfile: UPSDataAPI/Dockerfile
     depends_on:
       - mysql
+      - pwr_stat
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
@@ -31,6 +32,8 @@ services:
     hostname: pwr_stat
     restart: always
     image: dwinks/pwrstat_docker:latest
+    ports:
+      - "5003:5003"
     devices:
       - /dev/bus/usb/002/002:/dev/bus/usb/001/001
     volumes:

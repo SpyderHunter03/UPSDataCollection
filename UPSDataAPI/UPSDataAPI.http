@@ -1,0 +1,6 @@
+@UPSDataAPI_HostAddress = http://localhost:5080
+
+GET {{UPSDataAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

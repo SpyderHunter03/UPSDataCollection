@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: UPSDataCollection/Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+  api:
+    build:
+      context: .
+      dockerfile: UPSDataAPI/Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8080:8080" # Maps port 8080 of the host to port 8080 of the container
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: upsdb
+    ports:
+      - "3306:3306"

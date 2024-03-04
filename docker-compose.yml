@@ -12,6 +12,7 @@ services:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+    network_mode: host
   api:
     build:
       context: .
@@ -40,8 +41,6 @@ services:
     hostname: pwr_stat
     restart: always
     image: dwinks/pwrstat_docker:latest
-    ports:
-      - "5003:5003"
     devices:
       - /dev/bus/usb/002/002:/dev/bus/usb/001/001
     volumes:

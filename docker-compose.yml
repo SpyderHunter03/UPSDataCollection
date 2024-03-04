@@ -38,7 +38,7 @@ services:
       # Optionally override the powerstatd configuration file
       # - /docker_binds/pwr_stat/pwrstatd.conf:/etc/pwrstatd.conf:ro
     healthcheck:
-      test: ["CMD", "curl", "-sI", "http://127.0.0.1:5002/pwrstat"]
+      test: ["CMD", "curl", "-sI", "http://127.0.0.1:5003/pwrstat"]
       interval: 30s
       timeout: 1s
       retries: 24

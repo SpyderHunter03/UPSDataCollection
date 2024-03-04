@@ -24,6 +24,7 @@ db.Database.EnsureCreated();
 
 var client = new HttpClient();
 var timer = new System.Timers.Timer(10000);
+var countToKeep = 100;
 
 timer.Elapsed += async (sender, e) =>
 {
@@ -35,7 +36,13 @@ timer.Elapsed += async (sender, e) =>
         db.Add(data);
         await db.SaveChangesAsync();
 
-        var toDelete = db.UPSData.OrderBy(d => d.Time).TakeWhile((_, i) => db.UPSData.Count() - i > 100).ToList();
+        var totalRecords = db.UPSData.Count();
+        var recordsToDeleteCount = totalRecords > countToKeep ? totalRecords - countToKeep : 0;
+
+        var toDelete = db.UPSData
+            .OrderBy(d => d.Time)
+            .Take(recordsToDeleteCount)
+            .ToList();
         db.UPSData.RemoveRange(toDelete);
         await db.SaveChangesAsync();
     }
